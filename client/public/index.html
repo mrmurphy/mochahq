@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>TestHQ</title>
+        <meta name="description" content="A starter Elm app">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="vendor/milligram.css">
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+
+        <div id="main"></div>
+
+        <script src="built/index.js"></script>
+
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+
+            // Init the app
+            var app = Elm.embed(
+              Elm.Main,
+              document.getElementById("main")
+            )
+          })
+        </script>
+
+    </body>
+</html>

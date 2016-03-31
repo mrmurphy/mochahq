@@ -1,0 +1,134 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,100,700);
+
+* {
+  font-family: Lato;
+  box-sizing: border-box;
+}
+
+body, html, .layout, #main {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 24px;
+}
+
+body {
+  background-color: #1F2332;
+  color: #979CAE;
+}
+
+input[type=text] {
+  background: #4A4F65;
+  color: #979CAE;
+  border-radius: 2px;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.red { color: #FF4994; }
+.yellow { color: #FFC469; }
+.green { color: #53C777; }
+
+.topBar {
+  background: #1F2332;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .5em;
+}
+
+.topBar .logoText1 {
+  font-weight: 300;
+  font-size: 1.5em;
+}
+
+.topBar .logoText2 {
+  font-weight: 900;
+  font-size: 1.5em;
+}
+
+.topBar .spacer {
+  flex: 1;
+}
+
+.topBar .patternWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.topBar .patternWrapper label {
+  font-size: 1rem;
+  margin-right: .5em;
+  margin-bottom: 0;
+}
+
+.topBar .patternWrapper input {
+  font-size: 1rem;
+  padding: .5em;
+  height: auto;
+  border: none !important;
+}
+
+.topBar button {
+  font-size: .75em;
+  padding: 0 2em;
+  background-color: #53C777;
+  margin: 0;
+  margin-left: .5em;
+  border: none;
+  border-radius: 2px;
+  line-height: normal;
+  height: 2.2em;
+  display: block;
+}
+
+.topBar {
+  height: 75px;
+  border-bottom: 0px;
+  transition: 300ms;
+}
+
+.topBar.error {
+  border-bottom: 3px solid #C93838 !important;
+}
+
+.topBar .errorMessage {
+  color: #C93838;
+  font-weight: 500;
+}
+
+.main {
+  display: flex;
+  height: 100%;
+}
+
+.main .blockList {
+  background: #2D3141;
+  flex: 1;
+  height: 100%;
+}
+
+.main .block {
+  padding: 1em;
+  background: #1F2332;
+  border-left: .75em solid #3B3F53;
+  margin-top: .25em;
+  transition: 300ms;
+}
+
+.main .block.active {
+  border-left: 1em solid #53C777;
+}
+
+.main .block::first-letter {
+  text-transform: capitalize;
+}
+
+.main .detail {
+  background: #3B3F53;
+  flex: 2.5;
+  padding: 1em;
+}

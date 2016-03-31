@@ -1,0 +1,28 @@
+{
+  "name": "testhq",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:compile": "cd server && tsc -w",
+    "server:dev": "cd server && nodemon --exec 'node app.js ./test-fixture'",
+    "client:compile": "cd client && npm run -s watch",
+    "client:dev": "cd client && npm run -s reload",
+    "start": "concurrently -k -p command 'npm run -s server:compile' 'npm run -s server:dev' 'npm run -s client:compile' 'npm run -s client:dev'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "balanced-match": "0.3.0",
+    "cors": "2.7.1",
+    "express": "4.13.4",
+    "fs-extra-promise": "0.3.1",
+    "glob": "7.0.3",
+    "lodash": "4.6.1",
+    "socket.io": "1.4.5"
+  },
+  "devDependencies": {
+    "concurrently": "2.0.0"
+  }
+}

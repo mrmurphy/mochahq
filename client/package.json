@@ -1,0 +1,26 @@
+{
+  "name": "elm-seedling",
+  "version": "1.0.0",
+  "description": "A simple starter for Elm application development",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo 'No tests, sorry!'",
+    "build": "elm make src/Main.elm --output public/built/index.js",
+    "watch": "nodemon --watch src --ext elm --exec 'npm run build'",
+    "reload": "browser-sync start --ws --no-notify --proxy localhost:4042 --files \"public/built/*.js, public/*.css\"",
+    "install": "cp node_modules/milligram/dist/milligram.min.css public/vendor/milligram.css"
+  },
+  "keywords": [
+    "elm",
+    "seed",
+    "starter"
+  ],
+  "author": "Murphy Randle",
+  "license": "ISC",
+  "dependencies": {
+    "browser-sync": "2.11.1",
+    "elm": "0.16.0",
+    "milligram": "1.1.0",
+    "nodemon": "1.9.1"
+  }
+}

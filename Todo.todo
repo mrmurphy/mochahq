@@ -1,0 +1,34 @@
+# Server part 1:
+
+✔ Module for extracting Mocha tests @done(2016-03-26 19:58)
+  ✔ Use mocha config to find all appropriate source files @done(2016-03-25 07:55)
+  ✔ Parse describe blocks and it blocks @done(2016-03-26 19:58)
+  ✔ Store in the "TestBlock" type (below) @done(2016-03-26 19:58)
+
+```
+Type TestBlock = {
+  name: string;
+  children: TestBlock[];
+}
+```
+
+✔ Test to assert proper files are found, and proper structure is identified @done(2016-03-26 19:58)
+✔ Endpoint `GET /testBlocks` @done(2016-03-28 06:52)
+
+# Client part 1:
+
+☐ Basic layout with mock form elements
+☐ Test block list
+  ☐ Loads tests from the server
+  ☐ Keyboard navigable (up/down keys only)
+  ☐ Keyboard actionable (loads test block name into input and sends server request to run the test suite)
+
+# Future features:
+
+☐ Server check disk for new tests every 5 seconds, and use sockets to update UI
+
+# Design inspiration:
+
+http://flatfull.com/themes/flatkit/angular/?bg=black#/app/dashboard
+https://dribbble.com/shots/1821178-Sales-Report
+https://dribbble.com/shots/1507810-Sparrow/attachments/227068

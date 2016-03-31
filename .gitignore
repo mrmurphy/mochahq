@@ -1,0 +1,7 @@
+.DS_Store
+server/**/*.js
+server/**/*.map
+node_modules
+
+!server/test-fixture/**/*.js
+typings/
