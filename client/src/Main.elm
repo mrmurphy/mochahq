@@ -6,9 +6,10 @@ import Task exposing (Task, andThen)
 import Effects exposing (Effects, Never)
 import Model exposing (Model, init)
 import Update exposing (update)
-import Actions exposing (Action)
+import Actions exposing (..)
 import View exposing (view)
 import SocketIO exposing (io, on)
+import Tree exposing (pathToString)
 
 
 socket =
@@ -20,13 +21,45 @@ sockbox =
   Signal.mailbox "null"
 
 
-port incoming : Task a ()
-port incoming =
+port incomingSock : Task a ()
+port incomingSock =
   socket `andThen` on "test blocks" sockbox.address
+
+
+port arrowKeyPressed : Signal String
 
 
 blockUpdates =
   Signal.map Actions.ReceiveBlocks sockbox.signal
+
+
+arrowKeyPresses =
+  Signal.map
+    (\code ->
+      case code of
+        "ArrowUp" ->
+          HighlightPreviousBlock
+
+        "ArrowDown" ->
+          HighlightNextBlock
+
+        "ArrowRight" ->
+          HighlightFirstChildBlock
+
+        "ArrowLeft" ->
+          HighlightParentBlock
+
+        _ ->
+          NoOp
+    )
+    arrowKeyPressed
+
+
+port focusChanges : Signal String
+port focusChanges =
+  Signal.map .highlightedPath app.model
+    |> Signal.dropRepeats
+    |> Signal.map (\focusPath -> "#block-" ++ (pathToString focusPath))
 
 
 app =
@@ -37,7 +70,7 @@ app =
         )
     , view = view
     , update = update
-    , inputs = [ blockUpdates ]
+    , inputs = [ blockUpdates, arrowKeyPresses ]
     }
 
 

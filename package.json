@@ -8,8 +8,8 @@
     "server:compile": "cd server && tsc -w",
     "server:dev": "cd server && nodemon --exec 'node app.js ./test-fixture'",
     "client:compile": "cd client && npm run -s watch",
-    "client:dev": "cd client && npm run -s reload",
-    "start": "concurrently -k -p command 'npm run -s server:compile' 'npm run -s server:dev' 'npm run -s client:compile' 'npm run -s client:dev'"
+    "client:serve": "cd client && npm run -s reload",
+    "start": "concurrently -k -p command 'npm run -s server:compile' 'npm run -s server:dev' 'npm run -s client:serve'"
   },
   "author": "",
   "license": "ISC",

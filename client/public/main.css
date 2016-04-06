@@ -11,19 +11,16 @@ body, html, .layout, #main {
   border: 0;
   margin: 0;
   padding: 0;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 body {
-  background-color: #1F2332;
+  background-color: #f2f2f2;
   color: #979CAE;
 }
 
 input[type=text] {
-  background: #4A4F65;
   color: #979CAE;
-  border-radius: 2px;
-  border: none;
   margin: 0;
   padding: 0;
 }
@@ -33,11 +30,30 @@ input[type=text] {
 .green { color: #53C777; }
 
 .topBar {
-  background: #1F2332;
+  background: #fffeff;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: .5em;
+  padding-right: 1em;
+}
+
+.topBar .logo {
+  flex: 1;
+  max-width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #008976;
+  color: white;
+  height: 100%
+}
+
+.topBar * {
+  transition: 300ms;
+}
+
+.topBar.error .logo {
+  background: #C93838;
 }
 
 .topBar .logoText1 {
@@ -50,32 +66,34 @@ input[type=text] {
   font-size: 1.5em;
 }
 
-.topBar .spacer {
+.spacer {
   flex: 1;
 }
 
 .topBar .patternWrapper {
   display: flex;
   align-items: center;
+  flex: 1;
+  margin-left: .5em;
 }
 
 .topBar .patternWrapper label {
   font-size: 1rem;
   margin-right: .5em;
   margin-bottom: 0;
+  opacity: 0.5;
 }
 
 .topBar .patternWrapper input {
-  font-size: 1rem;
-  padding: .5em;
+  font-size: 1.8rem;
   height: auto;
-  border: none !important;
+  border: none;
 }
 
 .topBar button {
   font-size: .75em;
   padding: 0 2em;
-  background-color: #53C777;
+  background-color: #008976;
   margin: 0;
   margin-left: .5em;
   border: none;
@@ -106,29 +124,73 @@ input[type=text] {
 }
 
 .main .blockList {
-  background: #2D3141;
+  background: #282a35;
   flex: 1;
   height: 100%;
+  min-width: 250px;
+  max-width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-.main .block {
+.main button.block {
+  background: transparent;
+  margin: 0;
+  border: none;
   padding: 1em;
-  background: #1F2332;
-  border-left: .75em solid #3B3F53;
-  margin-top: .25em;
+  opacity: 0.75;
   transition: 300ms;
+  font-weight: 700;
+  font-size: .8em;
+  display: flex;
+  align-items: center;
+  text-transform: none;
+  height: auto;
+  line-height: normal;
+  letter-spacing: normal;
+  border-radius: 0;
+}
+
+.main button.block:focus {
+  opacity: .9;
+  background: rgba(255,255,255,.1);
+}
+
+.main .block i.left {
+  font-size: 1.3em;
+  display: block;
+  margin-right: .5em;
+}
+
+.main .block i.right {
+  font-size: 1.3em;
+  display: block;
 }
 
 .main .block.active {
-  border-left: 1em solid #53C777;
+  color: #FF4994;
+  opacity: 1;
 }
 
-.main .block::first-letter {
+.main .blockText {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.main .blockText::first-letter {
   text-transform: capitalize;
 }
 
-.main .detail {
-  background: #3B3F53;
+.main .detailWrapper {
+  background: tranparent;
   flex: 2.5;
   padding: 1em;
+}
+
+.main .detail {
+  padding: 1em;
+  background-color: white;
+  color: #3c3f44;
 }

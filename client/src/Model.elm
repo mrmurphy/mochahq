@@ -2,52 +2,59 @@ module Model (..) where
 
 import Json.Decode as D exposing (string, succeed, decodeString, list, (:=), Decoder, andThen)
 import Json.Decode.Extra exposing ((|:))
+import Tree exposing (Tree(Node, Leaf), Path)
 
 
-type SubTests
-  = SubTests (List TestBlock)
-
-
-type alias TestBlock =
-  { name : String
-  , children : SubTests
-  }
+type alias Block =
+  Tree String
 
 
 type alias Model =
-  { testBlocks : List TestBlock
+  { blockTree : Block
   , matchPattern : String
   , testOutput : String
   , errorMessage : String
-  , displayPath : List Int
-  , activeBlockPath : List Int
-  , hoveringBlockPath : List Int
+  , displayPath : Path
+  , activeBlockPath : Path
+  , highlightedPath : Path
   }
 
 
-subTestDecoder : Decoder SubTests
-subTestDecoder =
-  D.map SubTests (list (succeed () `andThen` \() -> testBlockDecoder))
+blockDecoder : Decoder Block
+blockDecoder =
+  let
+    basedOnChildren ch =
+      case ch of
+        [] ->
+          succeed Leaf
+            |: ("name" := string)
+
+        _ ->
+          succeed Node
+            |: ("name" := string)
+            |: D.map
+                (\children -> (Leaf "All Tests") :: children)
+                ("children" := list blockDecoder)
+  in
+    ("children" := list D.value) `andThen` basedOnChildren
 
 
-testBlockDecoder : Decoder TestBlock
-testBlockDecoder =
-  succeed TestBlock
-    |: ("name" := string)
-    |: ("children" := subTestDecoder)
-
-
+init : Model
 init =
-  { testBlocks = []
+  { blockTree = Leaf "No Tests"
   , matchPattern = ""
   , testOutput = ""
   , errorMessage = ""
   , displayPath = []
-  , activeBlock = [ "All tests" ]
-  , hoveringBlockPath = []
+  , activeBlockPath = [ 0 ]
+  , highlightedPath = [ 0 ]
   }
 
 
-decodeTestBlocks : String -> Result String (List TestBlock)
-decodeTestBlocks str =
-  decodeString (list testBlockDecoder) str
+decodeBlockTree : String -> Result String Block
+decodeBlockTree str =
+  decodeString
+    (list blockDecoder
+      |> D.map (\blocks -> Node "root" ((Leaf "All Tests") :: blocks))
+    )
+    str

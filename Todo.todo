@@ -17,18 +17,41 @@ Type TestBlock = {
 
 # Client part 1:
 
-☐ Basic layout with mock form elements
-☐ Test block list
-  ☐ Loads tests from the server
-  ☐ Keyboard navigable (up/down keys only)
-  ☐ Keyboard actionable (loads test block name into input and sends server request to run the test suite)
+✔ Basic layout with mock form elements @done(2016-04-01 07:18)
+✔ Test block list @done(2016-04-01 07:18)
+  ✔ Loads tests from the server @done(2016-04-01 07:18)
+
+# Styling communication:
+  ✔ Active test is highlighted in left bar @done(2016-04-02 05:42) @project(# Styling communication)
+  ✔ If the parent node is the active block, then "All tests" is hilighted @done(2016-04-02 05:42) @project(# Styling communication)
+  ✔ `Describe` blocks have right arrows that indicate they have children @done(2016-04-02 05:42) @project(# Styling communication)
+  ✔ `It` blocks have a different icon, and no right arrows @done(2016-04-02 05:42) @project(# Styling communication)
+
+Keyboard Navigation:
+  ✔ The up & down arrow keys highlight a test @done(2016-04-02 05:42) @project(Keyboard Navigation)
+  ✔ The enter key activates a test @done(2016-04-02 19:54) @project(Keyboard Navigation)
+  ✔ The left and right arrow keys show either the parent block's children, or the selected block's children, if the selected block is a node and not a leaf @done(2016-04-02 19:54) @project(Keyboard Navigation)
+  ✔ The 'active' highlight stays correctly highlighted for any level of ancestry @done(2016-04-05 05:53) @project(Keyboard Navigation)
+  ☐ The user can still type into the pattern input box the letters (hjkl) and use the arrow keys to move the cursor
+
+Mouse interaction:
+  ☐ A test block can be clicked on to be activated
+  ☐ Clicking on the right arrow next to a `describe` block displays the children of that block
+  ☐ Clicking on breadcrumbs on the top bar allows navigation back through the tree of parents
+
+Taking Action:
+  ☐ When a block is activated:
+   ✔ The pattern is changed to match that block's ancestry @done(2016-04-05 06:59) @project(Taking Action / ☐ When a block is activated)
+   ☐ A message is sent to the server, requesting that the tests be re-run with the new pattern
+
+Getting Results:
+  ☐ After taking action, logs from the tests are loaded through sockets into the UI
 
 # Future features:
-
-☐ Server check disk for new tests every 5 seconds, and use sockets to update UI
+  ☐ Server check disk for new tests every 5 seconds, and use sockets to update UI
 
 # Design inspiration:
-
-http://flatfull.com/themes/flatkit/angular/?bg=black#/app/dashboard
-https://dribbble.com/shots/1821178-Sales-Report
-https://dribbble.com/shots/1507810-Sparrow/attachments/227068
+  http://flatfull.com/themes/flatkit/angular/?bg=black#/app/dashboard
+  https://dribbble.com/shots/1821178-Sales-Report
+  https://dribbble.com/shots/1507810-Sparrow/attachments/227068
+  https://dribbble.com/shots/1262636-To-Do-Dashboard/attachments/172917
