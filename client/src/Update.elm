@@ -15,8 +15,8 @@ noEffect model =
   )
 
 
-update : Action -> Model -> ( Model, Effects Action )
-update action model =
+update : (Model.Context Action) -> Action -> Model -> ( Model, Effects Action )
+update context action model =
   case (Debug.log "ACTION" action) of
     NoOp ->
       noEffect model
@@ -32,6 +32,9 @@ update action model =
 
           Err msg ->
             noEffect { model | errorMessage = msg }
+
+    ReceiveResults s ->
+      noEffect {model | testOutput = s}
 
     HighlightNextBlock ->
       case (Tree.nextSibling model.highlightedPath model.blockTree) of
@@ -89,11 +92,12 @@ update action model =
         newPattern =
           join " " (Maybe.withDefault [] filtered)
       in
-      noEffect
-        { model
-        | activeBlockPath = model.highlightedPath
-        , matchPattern = newPattern
-        }
+        ( { model
+          | activeBlockPath = model.highlightedPath
+          , matchPattern = newPattern
+          }
+        , context.socketEvent "update pattern" newPattern
+        )
 
     SetMatchPattern p ->
       noEffect { model | matchPattern = p }

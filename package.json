@@ -1,5 +1,5 @@
 {
-  "name": "testhq",
+  "name": "mochahq",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,11 +8,17 @@
     "server:dev": "cd server && nodemon --exec 'babel-node app.js ./test-fixture'",
     "client:compile": "cd client && npm run -s watch",
     "client:serve": "cd client && npm run -s reload",
-    "start": "concurrently -k -p command 'npm run -s server:dev' 'npm run -s client:serve'"
+    "start": "concurrently -k -p command 'npm run -s server:dev' 'npm run -s client:serve'",
+    "build": "babel server --out-dir server-dist; cd client && npm run build",
+    "prepublish": "npm run build"
+  },
+  "bin": {
+    "mochahq": "server-dist/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ansi-html": "0.0.5",
     "babel-cli": "6.7.5",
     "babel-plugin-transform-flow-strip-types": "6.7.0",
     "babel-polyfill": "6.7.4",

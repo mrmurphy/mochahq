@@ -10,6 +10,7 @@ import List exposing (reverse, head, length, drop)
 import Maybe
 import Actions exposing (..)
 import String
+import Json.Encode as Json
 
 
 topBar address model =
@@ -24,7 +25,7 @@ topBar address model =
     ]
     [ div
         [ class "logo" ]
-        [ span [ class "logoText1" ] [ text "Test" ]
+        [ span [ class "logoText1" ] [ text "Mocha" ]
         , span [ class "logoText2" ] [ text "HQ" ]
         ]
     , div
@@ -108,10 +109,9 @@ view address model =
             <| block address model
         , div
             [ class "detailWrapper" ]
-            [ div
-                [ class "detail" ]
-                [ text (toString model)
-                ]
+            [ pre
+                [ class "detail", property "innerHTML" (Json.string model.testOutput) ]
+                []
             ]
         ]
     ]

@@ -1,11 +1,14 @@
-# Elm Seedling
+# Mocha HQ
 
-![](https://raw.githubusercontent.com/splodingsocks/elm-seedling/master/hanging-elm-763308_640.jpg)
+This is an almost-finished GUI test runner for Mocha tests.
 
- - `npm run build` : Builds the elm source to public/built/index.js
- - `npm run watch` : Watches elm files in src for changes, and runs `npm run build` when changes are detected
- - `npm run serve` : Starts up a server in the public directory, and live-reloads when public/built/*.js or public/*.css change
+It purposes to beautify and speed up the running of select mocha tests.
 
- I recommend opening up a shell with two splits, or two tabs, and running `npm watch` in one, and `npm serve` in another.
+More info coming soon, see Todo.todo for what's done, and what's planned.
 
-The [Bootstrap Material Design](http://fezvrasta.github.io/bootstrap-material-design/#getting-started) styling and JS are included.
+![](https://cloud.githubusercontent.com/assets/1227109/14565824/236e0e2c-02ea-11e6-933e-0a8e239187a1.png)
+
+## Running
+
+`npm install -g mochahq`
+`cd <your project directory>; mochahq`

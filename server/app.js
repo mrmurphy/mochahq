@@ -1,5 +1,7 @@
+#! /usr/bin/env node
 // @flow
 
+import 'babel-polyfill'
 import express from 'express'
 import http from 'http'
 import _io from 'socket.io'
@@ -33,6 +35,7 @@ function server(port: number, dir?: string) {
     console.log('a user connected')
 
     socket.on('update pattern', function(pattern: string) {
+      console.log('Got a pattern update:', pattern)
       runner(socket, pattern, root)
     })
 
@@ -41,17 +44,17 @@ function server(port: number, dir?: string) {
     })
   })
 
-  app.use(express.static(path.resolve('..', 'client', 'public')))
+  app.use(express.static(path.resolve(__dirname, '..', 'client', 'public')))
 
   server.listen(port, undefined, undefined, () => {
-    console.log(`TestHQ serving on port ${port}, from ${root}`)
+    console.log(`MochaHQ serving on http://localhost:${port}, from ${root}`)
   })
 
   return server
 }
 
 if (!module.parent) {
-  server(4042)
+  server(Number(process.env.PORT) || 4042)
 }
 
 export default server

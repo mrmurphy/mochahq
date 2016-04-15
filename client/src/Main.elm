@@ -16,21 +16,30 @@ socket =
   io "" SocketIO.defaultOptions
 
 
-sockbox : Mailbox String
+sockbox : Mailbox Action
 sockbox =
-  Signal.mailbox "null"
+  Signal.mailbox NoOp
 
 
-port incomingSock : Task a ()
-port incomingSock =
-  socket `andThen` on "test blocks" sockbox.address
+port socketOnTestBlocks : Task a ()
+port socketOnTestBlocks =
+  let
+    addr =
+      Signal.forwardTo sockbox.address Actions.ReceiveBlocks
+  in
+    socket `andThen` on "test blocks" addr
+
+
+port socketOnTestResults : Task a ()
+port socketOnTestResults =
+  let
+    addr =
+      Signal.forwardTo sockbox.address Actions.ReceiveResults
+  in
+    socket `andThen` on "test results" addr
 
 
 port arrowKeyPressed : Signal String
-
-
-blockUpdates =
-  Signal.map Actions.ReceiveBlocks sockbox.signal
 
 
 arrowKeyPresses =
@@ -62,6 +71,20 @@ port focusChanges =
     |> Signal.map (\focusPath -> "#block-" ++ (pathToString focusPath))
 
 
+socketEvent : String -> String -> Effects Action
+socketEvent event payload =
+  socket
+    `Task.andThen` (SocketIO.emit event payload)
+    |> Task.map (always NoOp)
+    |> Effects.task
+
+
+context : Model.Context Action
+context =
+  { socketEvent = socketEvent
+  }
+
+
 app =
   StartApp.start
     { init =
@@ -69,8 +92,8 @@ app =
         , Effects.none
         )
     , view = view
-    , update = update
-    , inputs = [ blockUpdates, arrowKeyPresses ]
+    , update = update context
+    , inputs = [ sockbox.signal, arrowKeyPresses ]
     }
 
 

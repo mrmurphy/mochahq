@@ -3,6 +3,7 @@ module Model (..) where
 import Json.Decode as D exposing (string, succeed, decodeString, list, (:=), Decoder, andThen)
 import Json.Decode.Extra exposing ((|:))
 import Tree exposing (Tree(Node, Leaf), Path)
+import Effects exposing (Effects)
 
 
 type alias Block =
@@ -17,6 +18,13 @@ type alias Model =
   , displayPath : Path
   , activeBlockPath : Path
   , highlightedPath : Path
+  }
+
+
+-- Bound helper functions and values that aren't serializable,
+-- But need to be passed around to multiple places.
+type alias Context a =
+  { socketEvent : String -> String -> Effects a
   }
 
 
