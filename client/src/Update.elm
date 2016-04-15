@@ -97,7 +97,3 @@ update action model =
 
     SetMatchPattern p ->
       noEffect { model | matchPattern = p }
-
-
--- pathValues : Model -> List String
--- pathValues model =
