@@ -4,43 +4,54 @@ import express from 'express'
 import http from 'http'
 import _io from 'socket.io'
 import path from 'path'
-import findBlocks from './blockfinder'
 import cors from 'cors'
 
-let app = express()
-let server = http.createServer(app)
-let io = _io(server)
+import findBlocks from './blockfinder'
+import runner from './runner'
 
-let args = process.argv
-let rootPath = args[2] || '.'
-let root = path.resolve(rootPath)
+function server(port: number, dir?: string) {
+  let app = express()
+  let server = http.createServer(app)
+  let io = _io(server)
 
-app.use(cors({
-  origin: true,
-  credentials: true
-}))
+  let args = process.argv
+  let rootPath = dir || args[2] || '.'
+  let root = path.resolve(rootPath)
 
-app.get('/testBlocks', function(_: any, res: any) {
-  findBlocks(root).then(blocks => {
-    res.json(blocks)
-  })
-})
+  app.use(cors({
+    origin: true,
+    credentials: true
+  }))
 
-io.on('connection', function(socket: any) {
-  console.log('a user connected')
-
-  socket.on('run test', function(testName: string) {
-    console.log('should run test ', testName)
+  app.get('/testBlocks', function(_: any, res: any) {
+    findBlocks(root).then(blocks => {
+      res.json(blocks)
+    })
   })
 
+  io.on('connection', function(socket: any) {
+    console.log('a user connected')
 
-  findBlocks(root).then(blocks => {
-    socket.emit('test blocks', JSON.stringify(blocks))
+    socket.on('update pattern', function(pattern: string) {
+      runner(socket, pattern, root)
+    })
+
+    findBlocks(root).then(blocks => {
+      socket.emit('test blocks', JSON.stringify(blocks))
+    })
   })
-})
 
-app.use(express.static(path.resolve('..', 'client', 'public')))
+  app.use(express.static(path.resolve('..', 'client', 'public')))
 
-server.listen(4042, undefined, undefined, () => {
-  console.log('TestHQ serving on port 4042, from ' + root)
-})
+  server.listen(port, undefined, undefined, () => {
+    console.log(`TestHQ serving on port ${port}, from ${root}`)
+  })
+
+  return server
+}
+
+if (!module.parent) {
+  server(4042)
+}
+
+export default server
