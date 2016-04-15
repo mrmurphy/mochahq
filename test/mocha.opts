@@ -1,3 +1,4 @@
+--require babel-polyfill
 --compilers js:babel-register
 --recursive
 server/test/

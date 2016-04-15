@@ -28,6 +28,7 @@
     "socket.io": "1.4.5"
   },
   "devDependencies": {
+    "babel-polyfill": "6.7.4",
     "concurrently": "2.0.0"
   }
 }
