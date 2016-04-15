@@ -37,15 +37,21 @@ Keyboard Navigation:
 Mouse interaction:
   ☐ A test block can be clicked on to be activated
   ☐ Clicking on the right arrow next to a `describe` block displays the children of that block
-  ☐ Clicking on breadcrumbs on the top bar allows navigation back through the tree of parents
+  ☐ Clicking on the back arrow at the top of the block list displays the parent
+  ☐ Clicking on the "go" button changes the pattern to whatever has been typed in
+
+UI Adjustments:
+  ☐ When test results are long, the result body scrolls, not the whole window.
 
 Taking Action:
-  ☐ When a block is activated:
+  ✔ When a block is activated @done(2016-04-15 07:38) @project(Taking Action)
    ✔ The pattern is changed to match that block's ancestry @done(2016-04-05 06:59) @project(Taking Action / ☐ When a block is activated)
-   ☐ A message is sent to the server, requesting that the tests be re-run with the new pattern
-
-Getting Results:
-  ☐ After taking action, logs from the tests are loaded through sockets into the UI
+   ✔ A message is sent to the server, requesting that the tests be re-run with the new pattern @done(2016-04-15 07:38) @project(Taking Action / ☐ When a block is activated)
+  ✔ On update pattern @done(2016-04-15 07:38) @project(Taking Action)
+    ✔ A message is sent to the server that the pattern has been updated, and the new pattern is included with the message @done(2016-04-15 07:38) @project(Taking Action / ☐ On update pattern)
+    ✔ The server builds the command to run in the test folder, and uses child_process.spawn to run the tests @done(2016-04-15 07:38) @project(Taking Action / ☐ On update pattern)
+    ✔ The server gets the output of running the tests, and sends it back to the client over the socket @done(2016-04-15 07:38) @project(Taking Action / ☐ On update pattern)
+    ✔ The client shows the test logs in its log area @done(2016-04-15 07:38) @project(Taking Action / ☐ On update pattern)
 
 # Future features:
   ☐ Server check disk for new tests every 5 seconds, and use sockets to update UI
