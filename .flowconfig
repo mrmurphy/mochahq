@@ -1,5 +1,6 @@
 [ignore]
 .*/node_modules/.*express/.*
+.*/node_modules/.*json5/.*
 
 [include]
 
