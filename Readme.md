@@ -61,5 +61,5 @@ shift-k : Scroll the test results up
 
 ## Caveats
 
-MongoHQ is currently only supported in Chrome. Pull requests for support in other
+MochaHQ is currently only supported in Chrome. Pull requests for support in other
 browsers are very welcome.
