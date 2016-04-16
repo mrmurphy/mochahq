@@ -11,3 +11,4 @@ type Action
   | HighlightParentBlock
   | ActivateHighlight
   | SetMatchPattern String
+  | ClickGo

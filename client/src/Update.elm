@@ -101,3 +101,8 @@ update context action model =
 
     SetMatchPattern p ->
       noEffect { model | matchPattern = p }
+
+    ClickGo ->
+      ( model
+      , context.socketEvent "update pattern" model.matchPattern
+      )

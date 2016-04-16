@@ -96,11 +96,15 @@ input[type=text] {
   background-color: #008976;
   margin: 0;
   margin-left: .5em;
-  border: none;
   border-radius: 2px;
   line-height: normal;
   height: 2.2em;
   display: block;
+  border: 3px solid #008976;
+}
+
+.topBar button:focus {
+  border: 3px solid #49C3FF;
 }
 
 .topBar {

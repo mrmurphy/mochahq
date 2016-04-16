@@ -2,6 +2,7 @@ module View (..) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import EasyEvents exposing (onEnterPress, onInput, onSpecificKeyPress)
 import Tree exposing (Tree(Leaf), pathToString)
 import Model exposing (Model)
@@ -39,7 +40,9 @@ topBar address model =
           ] []
         ]
     , div [ class "errorMessage" ] [ text model.errorMessage ]
-    , button [] [ text "Go!" ]
+    , button
+      [ onClick address ClickGo ]
+      [ text "Go!" ]
     ]
 
 
