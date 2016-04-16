@@ -1,8 +1,12 @@
 {
   "name": "mochahq",
   "version": "1.1.0",
-  "description": "",
+  "description": "A pleasant GUI interface for Mocha",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:splodingsocks/mochahq.git"
+  },
   "scripts": {
     "test": "mocha",
     "server:dev": "cd server && nodemon --exec 'babel-node app.js ./test-fixture'",
@@ -15,8 +19,8 @@
   "bin": {
     "mochahq": "server-dist/app.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Murphy Randle",
+  "license": "MIT",
   "dependencies": {
     "ansi-html": "0.0.5",
     "babel-cli": "6.7.5",
