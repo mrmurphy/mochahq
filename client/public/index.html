@@ -29,31 +29,30 @@
 
             document.body.addEventListener('keydown', function(e) {
               if (
+                document.activeElement ==
+                document.querySelector('#patternInput')
+              ) {
+                return
+              }
+
+              if (
                 e.code == "ArrowDown" ||
                 e.code == "ArrowUp" ||
                 e.code == "ArrowLeft" ||
                 e.code == "ArrowRight"
               ) {
-                e.preventDefault()
                 app.ports.arrowKeyPressed.send(e.code)
-              }
-            })
-
-            document.body.addEventListener('keypress', function(e) {
+              } else
               if (e.code == "KeyJ") {
-                e.preventDefault()
                 app.ports.arrowKeyPressed.send("ArrowDown")
               } else
               if (e.code == "KeyK") {
-                e.preventDefault()
                 app.ports.arrowKeyPressed.send("ArrowUp")
               } else
               if (e.code == "KeyH") {
-                e.preventDefault()
                 app.ports.arrowKeyPressed.send("ArrowLeft")
               } else
               if (e.code == "KeyL") {
-                e.preventDefault()
                 app.ports.arrowKeyPressed.send("ArrowRight")
               }
             })

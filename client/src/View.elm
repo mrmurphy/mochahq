@@ -33,6 +33,7 @@ topBar address model =
         [ label [] [ text "pattern:" ]
         , input
           [ type' "text"
+          , id "patternInput"
           , value model.matchPattern
           , onInput address SetMatchPattern
           ] []
