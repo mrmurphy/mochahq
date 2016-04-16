@@ -9,6 +9,7 @@ type Action
   | HighlightPreviousBlock
   | HighlightFirstChildBlock
   | HighlightParentBlock
+  | HighlightBlock Int
   | ActivateHighlight
   | SetMatchPattern String
   | ClickGo

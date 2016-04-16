@@ -97,6 +97,17 @@ input[type=text] {
   border: none;
 }
 
+button.naked {
+  background: none;
+  border: none;
+  text-transform: none;
+  height: auto;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+}
+
 .topBar button {
   font-size: .75em;
   padding: 0 2em;
@@ -170,6 +181,14 @@ input[type=text] {
   background: rgba(255,255,255,.1);
 }
 
+.main .block-with-children-wrapper {
+  display: flex;
+}
+
+.main .block-with-children-wrapper .block {
+  flex: 1;
+}
+
 .main .block i.left {
   font-size: 1.3em;
   display: block;
@@ -210,4 +229,39 @@ input[type=text] {
   border: 1px solid hsl(0,0%,90%);
   border-radius: 2px;
   overflow: scroll
+}
+
+button.back-button {
+  background: none;
+  border: none;
+  text-transform: none;
+  font-size: 12px;
+  height: auto;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  border-radius: 0;
+  text-align: left;
+  padding: 0;
+  padding-left: 1rem;
+  margin: 0;
+  line-height: 3em;
+}
+
+button.back-button:hover,
+button.back-button:focus {
+  color: #FFC469;
+}
+
+button.back-button i {
+  margin-right: .5em;
+}
+
+button.next-button {
+  font-size: 16px;
+  padding-left: .5em;
+  padding-right: 1em;
+}
+
+button.next-button:focus,
+button.next-button:hover {
+  color: #FFC469;
 }

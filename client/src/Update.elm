@@ -15,7 +15,7 @@ noEffect model =
   )
 
 
-update : (Model.Context Action) -> Action -> Model -> ( Model, Effects Action )
+update : Model.Context Action -> Action -> Model -> ( Model, Effects Action )
 update context action model =
   case (Debug.log "ACTION" action) of
     NoOp ->
@@ -34,7 +34,14 @@ update context action model =
             noEffect { model | errorMessage = msg }
 
     ReceiveResults s ->
-      noEffect {model | testOutput = s}
+      noEffect { model | testOutput = s }
+
+    HighlightBlock idx ->
+      noEffect
+        { model
+          | highlightedPath =
+              List.append (Tree.parentPath model.highlightedPath) [idx]
+        }
 
     HighlightNextBlock ->
       case (Tree.nextSibling model.highlightedPath model.blockTree) of
@@ -85,16 +92,25 @@ update context action model =
       let
         pathValues =
           Tree.valuesForPath model.highlightedPath model.blockTree
+
         filtered =
           Maybe.map
-            (filter (\p -> if p == "root" || p == "All Tests" then False else True))
+            (filter
+              (\p ->
+                if p == "root" || p == "All Tests" then
+                  False
+                else
+                  True
+              )
+            )
             pathValues
+
         newPattern =
           join " " (Maybe.withDefault [] filtered)
       in
         ( { model
-          | activeBlockPath = model.highlightedPath
-          , matchPattern = newPattern
+            | activeBlockPath = model.highlightedPath
+            , matchPattern = newPattern
           }
         , context.socketEvent "update pattern" newPattern
         )

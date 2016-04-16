@@ -2,7 +2,7 @@ module View (..) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onMouseOver)
 import EasyEvents exposing (onEnterPress, onInput, onSpecificKeyPress)
 import Tree exposing (Tree(Leaf), pathToString)
 import Model exposing (Model)
@@ -33,16 +33,17 @@ topBar address model =
         [ class "patternWrapper" ]
         [ label [] [ text "pattern:" ]
         , input
-          [ type' "text"
-          , id "patternInput"
-          , value model.matchPattern
-          , onInput address SetMatchPattern
-          ] []
+            [ type' "text"
+            , id "patternInput"
+            , value model.matchPattern
+            , onInput address SetMatchPattern
+            ]
+            []
         ]
     , div [ class "errorMessage" ] [ text model.errorMessage ]
     , button
-      [ onClick address ClickGo ]
-      [ text "Go!" ]
+        [ onClick address ClickGo ]
+        [ text "Go!" ]
     ]
 
 
@@ -84,38 +85,70 @@ block address model =
         case child of
           Tree.Leaf name ->
             button
-              [ class classes, onEnter, Html.Attributes.id id ]
+              [ class classes
+              , onEnter
+              , onMouseOver address (HighlightBlock index)
+              , onClick address ActivateHighlight
+              , Html.Attributes.id id
+              ]
               [ i [ class "icon left ion-ios-star" ] []
               , span [ class "blockText" ] [ text name ]
               ]
 
           Tree.Node name _ ->
-            button
-              [ class classes, onEnter, Html.Attributes.id id ]
-              [ i [ class "icon left ion-ios-circle-outline" ] []
-              , span [ class "blockText" ] [ text name ]
-              , span [ class "spacer" ] []
-              , i [ class "icon right ion-ios-arrow-forward" ] []
+            div
+              [ class "block-with-children-wrapper"]
+              [ button
+                  [ class classes
+                  , onEnter
+                  , onMouseOver address (HighlightBlock index)
+                  , onClick address ActivateHighlight
+                  , Html.Attributes.id id
+                  ]
+                  [ i [ class "icon left ion-ios-circle-outline" ] []
+                  , span [ class "blockText" ] [ text name ]
+                  , span [ class "spacer" ] []
+                  ]
+              , button
+                  [ onClick address HighlightFirstChildBlock
+                  , class "naked next-button"
+                  ]
+                  [ i
+                      [ class "icon right ion-ios-arrow-forward"
+                      ]
+                      []
+                  ]
               ]
   in
     Tree.mapChildren renderBlock model.displayPath model.blockTree
 
 
 view address model =
-  div
-    [ class "layout" ]
-    [ topBar address model
-    , div
-        [ class "main" ]
-        [ div
-            [ class "blockList"
-            ]
-            <| block address model
-        , div
-            [ class "detailWrapper" ]
-            [ pre
-                [ class "detail", property "innerHTML" (Json.string model.testOutput) ]
-                []
-            ]
-        ]
-    ]
+  let
+    backButton =
+      if (List.length model.displayPath) > 0 then
+        button
+          [ class "back-button"
+          , onClick address HighlightParentBlock
+          ]
+          [ i [ class "icon left ion-ios-arrow-back" ] [], text "Back" ]
+      else
+        div [] []
+  in
+    div
+      [ class "layout" ]
+      [ topBar address model
+      , div
+          [ class "main" ]
+          [ div
+              [ class "blockList"
+              ]
+              <| List.append [ backButton ] (block address model)
+          , div
+              [ class "detailWrapper" ]
+              [ pre
+                  [ class "detail", property "innerHTML" (Json.string model.testOutput) ]
+                  []
+              ]
+          ]
+      ]
