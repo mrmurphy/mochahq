@@ -58,3 +58,8 @@ l (or right arrow) - Display the children of the highlighted test in the sidebar
 shift-j : Scroll the test results down
 shift-k : Scroll the test results up
 ```
+
+## Caveats
+
+MongoHQ is currently only supported in Chrome. Pull requests for support in other
+browsers are very welcome.
