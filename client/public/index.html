@@ -27,7 +27,8 @@
               {arrowKeyPressed: ""}
             )
 
-            document.body.addEventListener('keydown', function(e) {
+            document.body.addEventListener('keypress', function(e) {
+              console.log('called keydown')
               if (
                 document.activeElement ==
                 document.querySelector('#patternInput')
@@ -43,7 +44,16 @@
               ) {
                 app.ports.arrowKeyPressed.send(e.code)
               } else
+              if (e.code == "KeyK" && e.shiftKey) {
+                let detail = document.querySelector(".detail")
+                detail.scrollTop = detail.scrollTop - 500
+              } else
+              if (e.code == "KeyJ" && e.shiftKey) {
+                let detail = document.querySelector(".detail")
+                detail.scrollTop = detail.scrollTop + 500
+              } else
               if (e.code == "KeyJ") {
+                console.log(e)
                 app.ports.arrowKeyPressed.send("ArrowDown")
               } else
               if (e.code == "KeyK") {
