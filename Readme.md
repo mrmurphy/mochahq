@@ -2,7 +2,7 @@
 
 A pleasant GUI interface for [Mocha](https://mochajs.org/)
 
-![](https://cloud.githubusercontent.com/assets/1227109/14565824/236e0e2c-02ea-11e6-933e-0a8e239187a1.png)
+![screenshot 2016-04-16 11 31 57](https://cloud.githubusercontent.com/assets/1227109/14582589/eb13f8c4-03c6-11e6-94c8-af02a995e4de.png)
 
 If you don't love:
 

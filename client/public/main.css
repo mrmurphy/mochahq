@@ -183,10 +183,12 @@ button.naked {
 
 .main .block-with-children-wrapper {
   display: flex;
+  min-height: 45px;
 }
 
 .main .block-with-children-wrapper .block {
   flex: 1;
+  overflow: hidden;
 }
 
 .main .block i.left {
