@@ -3,16 +3,16 @@
 const assert = require('assert')
 
 describe(`a top level describe`, function() {
-  it('with a nested it', () => {
+  it('with a nested it', function() {
     assert(true)
   })
 
-  it('with another it', () => {
+  it('with another it', function() {
     assert(true)
   })
 
-  describe("a nested describe", () => {
-    it(`with a mega-nested it`, () => {
+  describe("a nested describe", function() {
+    it(`with a mega-nested it`, function() {
       assert(true)
     })
   })
