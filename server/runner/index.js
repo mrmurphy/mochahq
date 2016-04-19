@@ -35,7 +35,7 @@ export default function(socket: Socket, pattern: string, root: string): void {
 
   runningChild = spawn(
     'mocha',
-    ['--color', '-w', '-g', pattern],
+    ['--colors', '-w', '-g', pattern],
     { cwd: root }
   )
 
