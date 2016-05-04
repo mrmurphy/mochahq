@@ -101,6 +101,10 @@ main =
   app.html
 
 
+port testOutputChange : Signal String
+port testOutputChange =
+  Signal.dropRepeats <| Signal.map .testOutput app.model 
+
 port tasks : Signal (Task Never ())
 port tasks =
   app.tasks

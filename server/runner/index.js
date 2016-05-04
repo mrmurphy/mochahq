@@ -1,6 +1,7 @@
 // @flow
 import {spawn} from 'child_process'
 import ansi from 'ansi-html'
+import treeKill from 'tree-kill'
 
 ansi.setColors({
   reset: '4d4d4c',
@@ -28,9 +29,34 @@ function format(str) {
     .replace('<br><span style="color:#545452;"></span><br>', '')
   return stripped
 }
+
+function checkForReset(str) {
+  // This regex matches anything up to and including the characters:
+  // [2J[1;3H
+  // which Mocha sends to the terminal, telling it to clear itself.
+  return str.replace(/((.|\n)*\[2J\[1;3H).*/, '')
+}
+
 export default function(socket: Socket, pattern: string, root: string): void {
+  console.log('Running the test job')
+
+  const onData = data => {
+    out += data.toString('utf-8')
+    out = checkForReset(out)
+    socket.emit('test results', format(out))
+  }
+
+  const onErr = data => {
+    out += data.toString('utf-8')
+    out = checkForReset(out)
+    socket.emit('test results', format(out))
+  }
+
   if (runningChild) {
-    runningChild.kill()
+    console.log('Killing the old test job', runningChild.pid)
+    runningChild.stdout.removeListener('data', onData)
+    runningChild.stderr.removeListener('data', onErr)
+    treeKill(runningChild.pid)
   }
 
   runningChild = spawn(
@@ -41,16 +67,8 @@ export default function(socket: Socket, pattern: string, root: string): void {
 
   out = ''
 
-  runningChild.stdout.on('data', data => {
-    out += data.toString('utf-8')
-    socket.emit('test results', format(out))
-  })
-
-  runningChild.stderr.on('data', data => {
-    out += data.toString('utf-8')
-    socket.emit('test results', format(out))
-  })
-
+  runningChild.stdout.on('data', onData)
+  runningChild.stderr.on('data', onErr)
   runningChild.on('close', () => {
     console.log('Test process ceased to run')
   })

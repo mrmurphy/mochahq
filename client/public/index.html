@@ -73,6 +73,17 @@
                 document.querySelector(selector).focus()
               }, 0)
             })
+
+            app.ports.testOutputChange.subscribe(function() {
+              console.log('got a change')
+              let detail = document.querySelector('pre.detail')
+              let shouldScroll = (detail.scrollTop + detail.clientHeight) >= (detail.scrollHeight - 25)
+              if (shouldScroll) {
+                setTimeout(function() {
+                  detail.scrollTop = 100000000
+                }, 500)
+              }
+            })
           })
         </script>
 
