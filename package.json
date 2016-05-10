@@ -12,7 +12,7 @@
     "server:dev": "cd server && nodemon --exec 'babel-node app.js ./test-fixture'",
     "client:compile": "cd client && npm run -s watch",
     "client:serve": "cd client && npm run -s reload",
-    "start": "concurrently -k -p command 'npm run -s server:dev' 'npm run -s client:serve'",
+    "start": "npm run -s server:dev & npm run -s client:serve & npm run -s client:compile",
     "build": "babel server --out-dir server-dist; cd client && npm run build",
     "prepublish": "npm run build"
   },
