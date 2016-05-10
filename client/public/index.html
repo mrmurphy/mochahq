@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     </head>
     <body>
-
         <div id="main"></div>
 
         <script src="built/index.js"></script>
@@ -27,15 +26,13 @@
               {arrowKeyPressed: ""}
             )
 
-            document.body.addEventListener('keypress', function(e) {
-              console.log('called keydown')
+            function onKeyPress(e) {
               if (
                 document.activeElement ==
                 document.querySelector('#patternInput')
               ) {
                 return
               }
-
               if (
                 e.code == "ArrowDown" ||
                 e.code == "ArrowUp" ||
@@ -65,7 +62,9 @@
               if (e.code == "KeyL") {
                 app.ports.arrowKeyPressed.send("ArrowRight")
               }
-            })
+            }
+
+            document.body.addEventListener('keydown', onKeyPress)
 
             app.ports.focusChanges.subscribe(function(selector) {
               console.log('selecting ', selector)
@@ -77,7 +76,7 @@
             app.ports.testOutputChange.subscribe(function() {
               console.log('got a change')
               let detail = document.querySelector('pre.detail')
-              let shouldScroll = (detail.scrollTop + detail.clientHeight) >= (detail.scrollHeight - 25)
+              let shouldScroll = (detail.scrollTop + detail.clientHeight) >= (detail.scrollHeight - 100)
               if (shouldScroll) {
                 setTimeout(function() {
                   detail.scrollTop = 100000000
