@@ -35,6 +35,12 @@ function server(port: number, dir?: string) {
   io.on('connection', function(socket: any) {
     console.log('a user connected')
 
+    function sendBlocks() {
+      findBlocks(root).then(blocks => {
+        socket.emit('test blocks', JSON.stringify(blocks))
+      })
+    }
+
     socket.on('update pattern', function(pattern: string) {
       console.log('Got a pattern update:', pattern)
       runner(socket, pattern, root)
@@ -44,9 +50,8 @@ function server(port: number, dir?: string) {
       state = newState
     })
 
-    findBlocks(root).then(blocks => {
-      socket.emit('test blocks', JSON.stringify(blocks))
-    })
+    sendBlocks()
+    setInterval(sendBlocks, 3000)
 
     if (state) {
       socket.emit('persisted state', state)
