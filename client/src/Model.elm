@@ -1,6 +1,7 @@
 module Model (..) where
 
-import Json.Decode as D exposing (string, succeed, decodeString, list, (:=), Decoder, andThen)
+import Json.Decode as D exposing (string, succeed, decodeString, list, int, (:=), Decoder, andThen)
+import Json.Encode as E
 import Json.Decode.Extra exposing ((|:))
 import Tree exposing (Tree(Node, Leaf), Path)
 import Effects exposing (Effects)
@@ -20,6 +21,37 @@ type alias Model =
   , highlightedPath : Path
   }
 
+
+type alias PersistedState =
+  { matchPattern : String
+  , displayPath : Path
+  , activeBlockPath : Path
+  , highlightedPath : Path
+  }
+
+
+stateDecoder : Decoder PersistedState
+stateDecoder =
+  succeed PersistedState
+    |: ("matchPattern" := string)
+    |: ("displayPath" := (list int))
+    |: ("activeBlockPath" := (list int))
+    |: ("highlightedPath" := (list int))
+
+decodeState : String -> Maybe PersistedState
+decodeState str =
+  decodeString stateDecoder str
+  |> Result.toMaybe
+
+encodeState : Model -> String
+encodeState model =
+  E.encode 0 <|
+  E.object
+    [ ("matchPattern", E.string model.matchPattern)
+    , ("displayPath", E.list (List.map E.int model.displayPath))
+    , ("activeBlockPath", E.list (List.map E.int model.activeBlockPath))
+    , ("highlightedPath", E.list (List.map E.int model.highlightedPath))
+    ]
 
 -- Bound helper functions and values that aren't serializable,
 -- But need to be passed around to multiple places.

@@ -19,6 +19,7 @@ function server(port: number, dir?: string) {
   let args = process.argv
   let rootPath = dir || args[2] || '.'
   let root = path.resolve(rootPath)
+  let state = null
 
   app.use(cors({
     origin: true,
@@ -39,9 +40,17 @@ function server(port: number, dir?: string) {
       runner(socket, pattern, root)
     })
 
+    socket.on('update state', function(newState: string) {
+      state = newState
+    })
+
     findBlocks(root).then(blocks => {
       socket.emit('test blocks', JSON.stringify(blocks))
     })
+
+    if (state) {
+      socket.emit('persisted state', state)
+    }
   })
 
   app.use(express.static(path.resolve(__dirname, '..', 'client', 'public')))

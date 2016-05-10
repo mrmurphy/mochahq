@@ -21,6 +21,14 @@ sockbox =
   Signal.mailbox NoOp
 
 
+port socketOnPersistedState : Task a ()
+port socketOnPersistedState =
+  let
+    addr =
+      Signal.forwardTo sockbox.address Actions.ReceivePersistedState
+  in
+    socket `andThen` on "persisted state" addr
+
 port socketOnTestBlocks : Task a ()
 port socketOnTestBlocks =
   let
@@ -103,7 +111,7 @@ main =
 
 port testOutputChange : Signal String
 port testOutputChange =
-  Signal.dropRepeats <| Signal.map .testOutput app.model 
+  Signal.dropRepeats <| Signal.map .testOutput app.model
 
 port tasks : Signal (Task Never ())
 port tasks =
