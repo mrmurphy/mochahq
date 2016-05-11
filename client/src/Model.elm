@@ -19,6 +19,7 @@ type alias Model =
   , displayPath : Path
   , activeBlockPath : Path
   , highlightedPath : Path
+  , search : String
   }
 
 
@@ -88,6 +89,7 @@ init =
   , displayPath = []
   , activeBlockPath = [ 0 ]
   , highlightedPath = [ 0 ]
+  , search = ""
   }
 
 

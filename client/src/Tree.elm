@@ -2,6 +2,7 @@ module Tree (..) where
 
 import List exposing (head, drop, reverse, append, map)
 import String
+import Char
 
 
 type Tree a
@@ -106,6 +107,13 @@ mapChildren transform path tree =
 
         Node _ children ->
           List.indexedMap transform children
+
+
+childValues : Tree a -> List a
+childValues tree =
+  case tree of
+    Leaf _ -> []
+    Node _ children -> List.map value children
 
 
 at : Path -> Tree a -> Maybe a
@@ -220,3 +228,36 @@ pathToString : Path -> String
 pathToString path =
   map toString path
     |> String.join "-"
+
+
+-- Functions specific to certain kinds of trees
+
+searchForString : Path -> Tree String -> String -> Maybe Int
+searchForString path tree caseSensitiveTerm =
+  let
+    lower : String -> String
+    lower str = String.map Char.toLower str
+
+    search : List String -> String -> Maybe Int
+    search values term =
+      let
+        searchResults = List.foldl
+          (\val memo ->
+            if memo.foundIndex /= -1 then
+              memo
+            else
+              if String.contains (lower term) (lower val) then
+                {curIndex = memo.curIndex + 1, foundIndex = memo.curIndex}
+              else
+                {curIndex = memo.curIndex + 1, foundIndex = -1}
+          ) {curIndex = 0, foundIndex = -1} values
+      in
+        case searchResults.foundIndex of
+          -1 -> Nothing
+          other -> Just other
+
+  in
+    Maybe.andThen (subtree path tree)
+    (\subTree ->
+      search (childValues subTree) caseSensitiveTerm
+    )

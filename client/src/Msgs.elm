@@ -1,8 +1,8 @@
-module Actions (..) where
+module Msgs (..) where
 
 import Model exposing (PersistedState)
 
-type Action
+type Msg
   = NoOp
   | ReceiveBlocks String
   | ReceiveResults String
@@ -15,3 +15,5 @@ type Action
   | ActivateHighlight
   | SetMatchPattern String
   | ClickGo
+  | UpdatedSearchBox String
+  | FinishSearch

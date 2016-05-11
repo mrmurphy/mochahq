@@ -6,7 +6,7 @@ import Task exposing (Task, andThen)
 import Effects exposing (Effects, Never)
 import Model exposing (Model, init)
 import Update exposing (update)
-import Actions exposing (..)
+import Msgs exposing (..)
 import View exposing (view)
 import SocketIO exposing (io, on)
 import Tree exposing (pathToString)
@@ -16,7 +16,7 @@ socket =
   io "" SocketIO.defaultOptions
 
 
-sockbox : Mailbox Action
+sockbox : Mailbox Msg
 sockbox =
   Signal.mailbox NoOp
 
@@ -25,7 +25,7 @@ port socketOnPersistedState : Task a ()
 port socketOnPersistedState =
   let
     addr =
-      Signal.forwardTo sockbox.address Actions.ReceivePersistedState
+      Signal.forwardTo sockbox.address Msgs.ReceivePersistedState
   in
     socket `andThen` on "persisted state" addr
 
@@ -33,7 +33,7 @@ port socketOnTestBlocks : Task a ()
 port socketOnTestBlocks =
   let
     addr =
-      Signal.forwardTo sockbox.address Actions.ReceiveBlocks
+      Signal.forwardTo sockbox.address Msgs.ReceiveBlocks
   in
     socket `andThen` on "test blocks" addr
 
@@ -42,7 +42,7 @@ port socketOnTestResults : Task a ()
 port socketOnTestResults =
   let
     addr =
-      Signal.forwardTo sockbox.address Actions.ReceiveResults
+      Signal.forwardTo sockbox.address Msgs.ReceiveResults
   in
     socket `andThen` on "test results" addr
 
@@ -79,7 +79,7 @@ port focusChanges =
     |> Signal.map (\focusPath -> "#block-" ++ (pathToString focusPath))
 
 
-socketEvent : String -> String -> Effects Action
+socketEvent : String -> String -> Effects Msg
 socketEvent event payload =
   socket
     `Task.andThen` (SocketIO.emit event payload)
@@ -87,7 +87,7 @@ socketEvent event payload =
     |> Effects.task
 
 
-context : Model.Context Action
+context : Model.Context Msg
 context =
   { socketEvent = socketEvent
   }

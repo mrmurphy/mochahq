@@ -28,8 +28,10 @@
 
             function onKeyPress(e) {
               if (
-                document.activeElement ==
-                document.querySelector('#patternInput')
+                (document.activeElement ==
+                document.querySelector('#patternInput'))
+                || (document.activeElement ==
+                document.querySelector('#searchInput'))
               ) {
                 return
               }
@@ -61,6 +63,10 @@
               } else
               if (e.code == "KeyL") {
                 app.ports.arrowKeyPressed.send("ArrowRight")
+              } if (e.code == "Slash") {
+                var searchBox = document.querySelector('#searchInput')
+                e.preventDefault()
+                searchBox.focus()
               }
             }
 

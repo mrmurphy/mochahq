@@ -9,7 +9,7 @@ import Model exposing (Model)
 import Signal exposing (Address)
 import List exposing (reverse, head, length, drop)
 import Maybe
-import Actions exposing (..)
+import Msgs exposing (..)
 import String
 import Json.Encode as Json
 
@@ -47,7 +47,7 @@ topBar address model =
     ]
 
 
-block : Address Action -> Model -> List Html
+block : Address Msg -> Model -> List Html
 block address model =
   let
     activeBlockIndex =
@@ -97,7 +97,7 @@ block address model =
 
           Tree.Node name _ ->
             div
-              [ class "block-with-children-wrapper"]
+              [ class "block-with-children-wrapper" ]
               [ button
                   [ class classes
                   , onEnter
@@ -134,6 +134,20 @@ view address model =
           [ i [ class "icon left ion-ios-arrow-back" ] [], text "Back" ]
       else
         div [] []
+
+    searchBox =
+      div
+        [ class "horiz search-box" ]
+        [ i [ class "icon ion-search" ] []
+        , input
+            [ type' "text"
+            , placeholder "Search"
+            , id "searchInput"
+            , onInput address UpdatedSearchBox
+            , onEnterPress address FinishSearch
+            ]
+            []
+        ]
   in
     div
       [ class "layout" ]
@@ -143,7 +157,7 @@ view address model =
           [ div
               [ class "blockList"
               ]
-              <| List.append [ backButton ] (block address model)
+              <| List.append [ searchBox, backButton ] (block address model)
           , div
               [ class "detailWrapper" ]
               [ pre

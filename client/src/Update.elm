@@ -1,22 +1,23 @@
 module Update (..) where
 
 import Model exposing (Model, decodeBlockTree, decodeState, encodeState)
-import Actions exposing (Action(..))
+import Msgs exposing (Msg(..))
 import Effects exposing (Effects)
 import String exposing (join)
 import List exposing (filter)
 import Tree
+import Task exposing (succeed)
 
 
-noEffect : Model -> ( Model, Effects Action )
+noEffect : Model -> ( Model, Effects Msg )
 noEffect model =
   ( model
   , Effects.none
   )
 
 
-update : Model.Context Action -> Action -> Model -> ( Model, Effects Action )
-update context action model =
+update : Model.Context Msg -> Msg -> Model -> ( Model, Effects Msg )
+update context msg model =
   let
     stateChangeEffect model =
       context.socketEvent "update state" (encodeState model)
@@ -26,7 +27,7 @@ update context action model =
       , stateChangeEffect model
       )
   in
-    case (Debug.log "ACTION" action) of
+    case (Debug.log "ACTION" msg) of
       NoOp ->
         noEffect model
 
@@ -148,3 +149,22 @@ update context action model =
         ( model
         , context.socketEvent "update pattern" model.matchPattern
         )
+
+      UpdatedSearchBox val ->
+        noEffect { model | search = val }
+
+      FinishSearch ->
+        let
+          found =
+            Tree.searchForString
+            model.displayPath
+            model.blockTree
+            model.search
+          eff =
+            case found of
+              Nothing -> Effects.task (succeed NoOp)
+              Just idx -> Effects.task (succeed (HighlightBlock idx))
+        in
+          ( {model | search = ""}
+          , eff
+          )

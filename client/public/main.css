@@ -26,6 +26,10 @@ pre {
   box-shadow: 0 0 3px rgba(0,0,0,.15)*/
 }
 
+.horiz {
+  display: flex;
+}
+
 input[type=text] {
   color: #979CAE;
   margin: 0;
@@ -266,4 +270,24 @@ button.next-button {
 button.next-button:focus,
 button.next-button:hover {
   color: #FFC469;
+}
+
+.search-box {
+  padding: 8px 16px;
+}
+
+.search-box i {
+  margin-right: 8px;
+}
+
+.search-box input {
+  border: 0;
+  height: inherit;
+  padding: 8px;
+  border-radius: 0;
+}
+
+.search-box input:focus {
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
 }
