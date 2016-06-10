@@ -91,8 +91,10 @@ block address model =
               , onClick address ActivateHighlight
               , Html.Attributes.id id
               ]
-              [ i [ class "icon left ion-ios-star" ] []
-              , span [ class "blockText" ] [ text name ]
+              [ div [ class "buttonLayout"]
+                [ i [ class "icon left ion-ios-star" ] []
+                , span [ class "blockText" ] [ text name ]
+                ]
               ]
 
           Tree.Node name _ ->
@@ -105,9 +107,11 @@ block address model =
                   , onClick address ActivateHighlight
                   , Html.Attributes.id id
                   ]
-                  [ i [ class "icon left ion-ios-circle-outline" ] []
-                  , span [ class "blockText" ] [ text name ]
-                  , span [ class "spacer" ] []
+                  [ div [class "buttonLayout"]
+                    [ i [ class "icon left ion-ios-circle-outline" ] []
+                    , span [ class "blockText" ] [ text name ]
+                    , span [ class "spacer" ] []
+                    ]
                   ]
               , button
                   [ onClick address HighlightFirstChildBlock

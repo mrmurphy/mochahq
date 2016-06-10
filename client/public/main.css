@@ -170,14 +170,19 @@ button.naked {
   transition: 300ms;
   font-weight: 700;
   font-size: .8em;
-  display: flex;
-  align-items: center;
   text-transform: none;
   height: auto;
   line-height: normal;
   letter-spacing: normal;
   border-radius: 0;
   min-height: 45px;
+}
+
+/* Had to drop in a div wrapping button content because of a firefox bug:
+https://bugzilla.mozilla.org/show_bug.cgi?id=984869 */
+.main button.block .buttonLayout {
+  display: flex;
+  align-items: center;
 }
 
 .main button.block:focus {
