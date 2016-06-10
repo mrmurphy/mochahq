@@ -22,5 +22,6 @@
     "elm": "0.16.0",
     "milligram": "1.1.0",
     "nodemon": "1.9.1"
-  }
+  },
+  "devDependencies": {}
 }
