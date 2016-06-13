@@ -1,6 +1,6 @@
 {
   "name": "mochahq",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "A pleasant GUI interface for Mocha",
   "main": "index.js",
   "repository": {
