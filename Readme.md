@@ -1,3 +1,6 @@
+# RETIRED PROJECT
+So sorry, this project is no longer maintained. Let me know if you'd like to take it over!
+
 # Mocha HQ
 
 A pleasant GUI interface for [Mocha](https://mochajs.org/)
